@@ -1,6 +1,6 @@
 @push('styles')
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-  <link rel="stylesheet" href="{{ asset('assets/starlite/style.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/starlite/style.css') }}?v=20260719-nav">
   <style>
     :root {
       --starlink-primary: #003366;

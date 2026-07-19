@@ -157,7 +157,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     <!-- Custom overrides -->
-    <link rel="stylesheet" href="{{ asset('assets/starlite/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/starlite/style.css') }}?v=20260719-nav">
 
 <style>
   :root {
@@ -604,6 +604,5 @@
 
 
    @include('flash_msg')
-
 
 
