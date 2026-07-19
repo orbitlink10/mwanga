@@ -21,6 +21,7 @@ use App\Http\Controllers\DesignController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\WeldingProductController;
 use App\Http\Controllers\Admin\AdminCategoryController;
+use Illuminate\Support\Facades\File;
 
 
 use App\Http\Controllers\SliderController;
@@ -50,6 +51,27 @@ use App\Http\Controllers\Admin\WeldingProductController as AdminWeldingProductCo
 
 
 Route::get('google-feed.xml', [App\Http\Controllers\GoogleFeedController::class, 'index']);
+
+Route::get('/storage/{path}', function (string $path) {
+    $path = ltrim(str_replace('\\', '/', rawurldecode($path)), '/');
+
+    if (! preg_match('#^uploads/(images|medias)/.+#', $path) || str_contains($path, '..')) {
+        abort(404);
+    }
+
+    foreach ([storage_path($path), storage_path('app/public/'.$path)] as $candidate) {
+        $file = realpath($candidate);
+        $root = realpath(dirname($candidate));
+
+        if ($file && $root && str_starts_with($file, $root) && File::isFile($file)) {
+            return response()->file($file, [
+                'Cache-Control' => 'public, max-age=31536000',
+            ]);
+        }
+    }
+
+    abort(404);
+})->where('path', 'uploads/(images|medias)/.*');
 
 // Serve robots.txt with canonical sitemap/domain for search engines.
 Route::get('/robots.txt', function () {
