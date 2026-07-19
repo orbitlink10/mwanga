@@ -1,0 +1,1 @@
+Keep this runtime directory available on hosts that skip hidden files.
