@@ -55,15 +55,15 @@ Route::get('google-feed.xml', [App\Http\Controllers\GoogleFeedController::class,
 Route::get('/storage/{path}', function (string $path) {
     $path = ltrim(str_replace('\\', '/', rawurldecode($path)), '/');
 
-    if (! preg_match('#^uploads/(images|medias)/.+#', $path) || str_contains($path, '..')) {
+    if (! preg_match('#^(uploads/(images|medias)|products)/.+#', $path) || preg_match('#(^|/)\.\.(/|$)#', $path)) {
         abort(404);
     }
 
-    foreach ([storage_path($path), storage_path('app/public/'.$path)] as $candidate) {
-        $file = realpath($candidate);
-        $root = realpath(dirname($candidate));
+    foreach ([storage_path('app/public'), storage_path()] as $storageRoot) {
+        $root = realpath($storageRoot);
+        $file = realpath($storageRoot.DIRECTORY_SEPARATOR.str_replace('/', DIRECTORY_SEPARATOR, $path));
 
-        if ($file && $root && str_starts_with($file, $root) && File::isFile($file)) {
+        if ($file && $root && str_starts_with($file, $root.DIRECTORY_SEPARATOR) && File::isFile($file)) {
             return response()->file($file, [
                 'Cache-Control' => 'public, max-age=31536000',
             ]);
@@ -71,7 +71,7 @@ Route::get('/storage/{path}', function (string $path) {
     }
 
     abort(404);
-})->where('path', 'uploads/(images|medias)/.*');
+})->where('path', '(uploads/(images|medias)|products)/.*');
 
 // Serve robots.txt with canonical sitemap/domain for search engines.
 Route::get('/robots.txt', function () {
