@@ -86,7 +86,7 @@ return new class extends Migration
             'contact_email' => '',
             'email_address' => '',
             'contact_phone' => '+254 714804532',
-            'whatsapp_phone' => '',
+            'whatsapp_phone' => '254714804532',
             'address' => 'Kenya',
             'facebook' => '',
             'twitter' => '',
