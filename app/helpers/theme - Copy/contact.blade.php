@@ -21,7 +21,7 @@
                                         <span class="icon-phone-call mr-3 text-primary"></span>
                                         <div>
                                             <p class="mb-1">Have any questions?</p>
-                                            <h4><a href="tel:+254729299439" class="text-light">Free +254 729 299 439</a></h4>
+                                            <h4><a href="tel:+254714804532" class="text-light">Free +254 714804532</a></h4>
                                         </div>
                                     </div>
                                 </li>

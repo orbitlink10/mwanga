@@ -26,6 +26,6 @@
     <p>Best regards,<br>
     Starlink Kenya<br>
     <br>
-    +254 729 299 439</p>
+    +254 714804532</p>
 </body>
 </html>

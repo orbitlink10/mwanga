@@ -47,7 +47,7 @@ function get_uploaded_image($path){
         'services_page_meta' => 'Professional Starlink kit supply, installation, and connectivity support across Kenya.',
         'contact_email' => '',
         'email_address' => '',
-        'contact_phone' => '',
+        'contact_phone' => '+254 714804532',
         'whatsapp_phone' => '',
         'address' => 'Kenya',
         'facebook' => '',
