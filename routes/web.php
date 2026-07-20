@@ -73,6 +73,55 @@ Route::get('/storage/{path}', function (string $path) {
     abort(404);
 })->where('path', '(uploads/(images|medias)|products)/.*');
 
+// The lucare theme assets are stored at the project root, outside public/.
+Route::get('/lucare/{path}', function (string $path) {
+    $path = ltrim(str_replace('\\', '/', rawurldecode($path)), '/');
+
+    if ($path === '' || preg_match('#(^|/)\.\.(/|$)#', $path)) {
+        abort(404);
+    }
+
+    $themeRoot = realpath(base_path('lucare'));
+    $file = realpath(base_path('lucare'.DIRECTORY_SEPARATOR.str_replace('/', DIRECTORY_SEPARATOR, $path)));
+
+    if (! $themeRoot || ! $file || ! str_starts_with($file, $themeRoot.DIRECTORY_SEPARATOR) || ! File::isFile($file)) {
+        abort(404);
+    }
+
+    $contentTypes = [
+        'css' => 'text/css; charset=UTF-8',
+        'js' => 'application/javascript; charset=UTF-8',
+        'json' => 'application/json; charset=UTF-8',
+        'svg' => 'image/svg+xml',
+        'png' => 'image/png',
+        'jpg' => 'image/jpeg',
+        'jpeg' => 'image/jpeg',
+        'gif' => 'image/gif',
+        'webp' => 'image/webp',
+        'ico' => 'image/x-icon',
+        'woff' => 'font/woff',
+        'woff2' => 'font/woff2',
+        'ttf' => 'font/ttf',
+        'eot' => 'application/vnd.ms-fontobject',
+    ];
+    $extension = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+    $headers = [
+        'Cache-Control' => 'public, max-age=31536000',
+    ];
+
+    if (isset($contentTypes[$extension])) {
+        $headers['Content-Type'] = $contentTypes[$extension];
+    }
+
+    return response()->file($file, $headers);
+})->where('path', '.*')->withoutMiddleware([
+    \App\Http\Middleware\EncryptCookies::class,
+    \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+    \Illuminate\Session\Middleware\StartSession::class,
+    \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+    \App\Http\Middleware\AddAltToImages::class,
+]);
+
 // Serve robots.txt with canonical sitemap/domain for search engines.
 Route::get('/robots.txt', function () {
     $theme = (string) get_option('theme');
