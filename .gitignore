@@ -13,6 +13,8 @@
 /blog
 .env
 .htaccess
+!/.htaccess
+!/public/.htaccess
 .env.backup
 .env.production
 .phpunit.result.cache
