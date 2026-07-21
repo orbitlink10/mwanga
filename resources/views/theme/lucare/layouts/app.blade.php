@@ -19,7 +19,7 @@
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="@yield('og_title', get_option('site_name'))" />
     <meta property="og:description" content="@yield('og_description', get_option('hero_header_description'))" />
-    <meta property="og:image" content="@yield('og_image', get_option('hero_image'))" />
+    <meta property="og:image" content="@yield('og_image', uploaded_asset_url(get_option('hero_image'), 'default-image.jpg'))" />
     <meta property="og:url" content="@yield('og_url', url('/'))" />
     <meta property="og:site_name" content="{{ get_option('site_name') }}" />
     <meta property="og:type" content="@yield('og_type', 'website')" />
@@ -29,16 +29,16 @@
     <meta name="twitter:site" content="@yield('twitter_site', url('/'))" />
     <meta name="twitter:title" content="@yield('twitter_title', get_option('site_name'))" />
     <meta name="twitter:description" content="@yield('twitter_description', get_option('hero_image'))" />
-    <meta name="twitter:image" content="@yield('twitter_image', get_option('hero_image'))" />
+    <meta name="twitter:image" content="@yield('twitter_image', uploaded_asset_url(get_option('hero_image'), 'default-image.jpg'))" />
     @show
 
     <!-- Favicons -->
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ get_option('favicon', asset('default-favicon.png')) }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ get_option('favicon', asset('default-favicon.png')) }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ get_option('favicon', asset('default-favicon.png')) }}">
-    <link rel="shortcut icon" type="image/x-icon" href="{{ get_option('favicon', asset('default-favicon.png')) }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ uploaded_asset_url(get_option('favicon'), 'default-favicon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ uploaded_asset_url(get_option('favicon'), 'default-favicon.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ uploaded_asset_url(get_option('favicon'), 'default-favicon.png') }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ uploaded_asset_url(get_option('favicon'), 'default-favicon.png') }}">
     <link rel="manifest" href="{{ asset('dark/assets/img/favicons/manifest.json') }}">
-    <meta name="msapplication-TileImage" content="{{ get_option('favicon', asset('default-favicon.png')) }}">
+    <meta name="msapplication-TileImage" content="{{ uploaded_asset_url(get_option('favicon'), 'default-favicon.png') }}">
 
     <!-- Canonical URL -->
     <link rel="canonical" href="{{ url()->current() }}">
@@ -65,7 +65,7 @@
                 <div class="header-wrap">
                     <div class="logo logo-width-1">
                         <a href="{{ url('/')}}">
-                            <img src="{{ get_option('logo') }}" alt="logo">
+                            <img src="{{ uploaded_asset_url(get_option('logo')) }}" alt="logo">
                         </a>
                     </div>
 
@@ -129,7 +129,7 @@
             <div class="container">
                 <div class="header-wrap header-space-between position-relative">
                     <div class="logo logo-width-1 d-block d-lg-none">
-                        <a href="{{ url('/')}}"><img src="{{ get_option('logo') }}" alt="logo"></a>
+                        <a href="{{ url('/')}}"><img src="{{ uploaded_asset_url(get_option('logo')) }}" alt="logo"></a>
                     </div>
                     <div class="header-nav d-none d-lg-flex">
 
@@ -223,7 +223,7 @@
         <div class="mobile-header-wrapper-inner">
             <div class="mobile-header-top">
                 <div class="mobile-header-logo">
-                    <a href="{{ url('home') }}"><img src="{{ get_option('logo') }}" alt="logo"></a>
+                    <a href="{{ url('home') }}"><img src="{{ uploaded_asset_url(get_option('logo')) }}" alt="logo"></a>
                 </div>
                 <div class="mobile-menu-close close-style-wrap close-style-position-inherit">
                     <button class="close-style search-close">

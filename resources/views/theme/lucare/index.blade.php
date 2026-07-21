@@ -22,7 +22,7 @@
                             </div>
                             <div class="col-lg-7 col-md-6">
                                 <div class="single-slider-img single-slider-img-1">
-                                    <img class="animated slider-1-1" src="{{ $slider->img_url }}" alt="">
+                                    <img class="animated slider-1-1" src="{{ uploaded_asset_url($slider->img_url) }}" alt="">
                                 </div>
                             </div>
                         </div>
@@ -44,7 +44,7 @@
                     <a href="{{ route('view_product_category', ['slug' => $category->slug]) }}" class="text-decoration-none text-dark">
                         <div class="card category-card border-0 shadow-sm h-100">
                             <div class="card-img-top position-relative overflow-hidden">
-                                <img src="{{ $category->photo }}" 
+                                <img src="{{ uploaded_asset_url($category->photo, 'lucare/assets/imgs/shop/category-thumb-1.jpg') }}" 
                                      alt="{{ $category->name }}"
                                      class="img-fluid w-100 h-100 object-fit-cover">
                                 <div class="overlay d-flex align-items-center justify-content-center">

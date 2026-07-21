@@ -64,9 +64,33 @@ Route::get('/storage/{path}', function (string $path) {
         $file = realpath($storageRoot.DIRECTORY_SEPARATOR.str_replace('/', DIRECTORY_SEPARATOR, $path));
 
         if ($file && $root && str_starts_with($file, $root.DIRECTORY_SEPARATOR) && File::isFile($file)) {
-            return response()->file($file, [
+            $contentTypes = [
+                'css' => 'text/css; charset=UTF-8',
+                'js' => 'application/javascript; charset=UTF-8',
+                'json' => 'application/json; charset=UTF-8',
+                'svg' => 'image/svg+xml',
+                'png' => 'image/png',
+                'jpg' => 'image/jpeg',
+                'jpeg' => 'image/jpeg',
+                'jfif' => 'image/jpeg',
+                'gif' => 'image/gif',
+                'webp' => 'image/webp',
+                'ico' => 'image/x-icon',
+                'woff' => 'font/woff',
+                'woff2' => 'font/woff2',
+                'ttf' => 'font/ttf',
+                'eot' => 'application/vnd.ms-fontobject',
+            ];
+            $extension = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+            $headers = [
                 'Cache-Control' => 'public, max-age=31536000',
-            ]);
+            ];
+
+            if (isset($contentTypes[$extension])) {
+                $headers['Content-Type'] = $contentTypes[$extension];
+            }
+
+            return response()->file($file, $headers);
         }
     }
 
@@ -96,6 +120,7 @@ Route::get('/lucare/{path}', function (string $path) {
         'png' => 'image/png',
         'jpg' => 'image/jpeg',
         'jpeg' => 'image/jpeg',
+        'jfif' => 'image/jpeg',
         'gif' => 'image/gif',
         'webp' => 'image/webp',
         'ico' => 'image/x-icon',

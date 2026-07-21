@@ -28,6 +28,45 @@ function get_uploaded_image($path){
     return $response;
 }
 
+function uploaded_asset_url($value, $fallback = ''){
+    $value = trim((string) ($value ?? ''));
+
+    if ($value === '') {
+        return $fallback !== '' ? asset(ltrim($fallback, '/')) : '';
+    }
+
+    $path = parse_url($value, PHP_URL_PATH);
+    $path = $path !== null && $path !== false && $path !== ''
+        ? $path
+        : $value;
+
+    $path = ltrim(str_replace('\\', '/', rawurldecode($path)), '/');
+    $storagePath = null;
+
+    foreach (['public/storage/', 'storage/', 'app/public/'] as $prefix) {
+        if (str_starts_with($path, $prefix)) {
+            $storagePath = substr($path, strlen($prefix));
+            break;
+        }
+    }
+
+    if ($storagePath === null && preg_match('#^(uploads/(images|medias)|products)/#', $path)) {
+        $storagePath = $path;
+    }
+
+    if ($storagePath !== null) {
+        $segments = array_map('rawurlencode', array_filter(explode('/', $storagePath), 'strlen'));
+
+        return url('storage/'.implode('/', $segments));
+    }
+
+    if (str_starts_with($value, 'http://') || str_starts_with($value, 'https://') || str_starts_with($value, '//')) {
+        return $value;
+    }
+
+    return asset(ltrim($value, '/'));
+}
+
 
 
     function get_option($option_key = '', $default = null){
