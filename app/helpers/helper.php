@@ -13,10 +13,16 @@ function get_uploaded_image($path){
         abort(404);
     }
 
-    $path = normalizeFilePath(storage_path('/app/public/' . $path));
+    $relativePath = ltrim(str_replace('\\', '/', rawurldecode((string) $path)), '/');
+
+    if (! preg_match('#^(uploads/(images|medias)|products)/.+#', $relativePath) || preg_match('#(^|/)\.\.(/|$)#', $relativePath)) {
+        abort(404);
+    }
+
+    $path = normalizeFilePath(storage_path('/app/public/' . $relativePath));
 
     if(!File::exists($path)) {
-        abort(404);
+        return redirect()->away(uploaded_asset_fallback_url($relativePath), 302);
     }
 
     $file = File::get($path);
@@ -26,6 +32,17 @@ function get_uploaded_image($path){
     $response->header("Content-Type", $type);
 
     return $response;
+}
+
+function uploaded_asset_fallback_url($path){
+    $baseUrl = rtrim((string) env(
+        'UPLOADED_ASSET_FALLBACK_URL',
+        'https://raw.githubusercontent.com/orbitlink10/mwanga/main/storage/app/public'
+    ), '/');
+    $path = ltrim(str_replace('\\', '/', rawurldecode((string) $path)), '/');
+    $segments = array_map('rawurlencode', array_filter(explode('/', $path), 'strlen'));
+
+    return $baseUrl.'/'.implode('/', $segments);
 }
 
 function uploaded_asset_url($value, $fallback = ''){

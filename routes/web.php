@@ -102,7 +102,8 @@ Route::get('/storage/{path}', function (string $path) {
         }
     }
 
-    abort(404);
+    return redirect()->away(uploaded_asset_fallback_url($path), 302)
+        ->header('Cache-Control', 'public, max-age=300');
 })->where('path', '(uploads/(images|medias)|products)/.*');
 
 // The lucare theme assets are stored at the project root, outside public/.
