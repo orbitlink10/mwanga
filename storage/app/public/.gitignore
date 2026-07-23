@@ -1,2 +1,10 @@
 *
 !.gitignore
+!/products/
+!/products/**
+!/uploads/
+!/uploads/images/
+!/uploads/images/**
+!/uploads/medias/
+!/uploads/medias/**
+*.exe
