@@ -1,6 +1,7 @@
 @extends('theme.nara.layouts.main')
 @section('title', $product->name)
 @section('meta_description', $product->meta_description)
+@php($productImageUrl = uploaded_asset_url($product->photo, 'default-image.jpg'))
 
 @section('social-meta')
 <!-- Canonical URL -->
@@ -12,7 +13,7 @@
 <!-- Open Graph Meta Tags -->
 <meta property="og:title" content="{{ $product->meta_title }}" />
 <meta property="og:description" content="{{ $product->meta_description }}" />
-<meta property="og:image" content="{{ $product->photo ? url('/') . '/storage/' . $product->photo : asset('default-image.jpg') }}" />
+<meta property="og:image" content="{{ $productImageUrl }}" />
 <meta property="og:image:width" content="1478" />
 <meta property="og:image:height" content="1108" />
 <meta property="og:url" content="{{ url()->current() }}" />
@@ -24,7 +25,7 @@
 <meta name="twitter:site" content="{{ url('/') }}" />
 <meta name="twitter:title" content="{{ $product->meta_title }}" />
 <meta name="twitter:description" content="{{ $product->meta_description }}" />
-<meta name="twitter:image" content="{{ $product->photo ? url('/') . '/storage/' . $product->photo : asset('default-image.jpg') }}" />
+<meta name="twitter:image" content="{{ $productImageUrl }}" />
 @endsection
 
 @section('main')
@@ -53,13 +54,14 @@
                         <div class="carousel-inner">
                             @if($mediafiles->count() > 0)
                                 @foreach($mediafiles as $index => $media)
+                                    @php($mediaImageUrl = uploaded_asset_url($media->file_path))
                                     <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
-                                        <img src="{{ $media->file_path }}" alt="{{ $product->name }}" class="d-block w-100" style="height: 600px; object-fit: cover; cursor: pointer;" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="openModal('{{ $media->file_path }}', '{{ $index }}')">
+                                        <img src="{{ $mediaImageUrl }}" alt="{{ $product->name }}" class="d-block w-100" style="height: 600px; object-fit: cover; cursor: pointer;" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="openModal('{{ $mediaImageUrl }}', '{{ $index }}')">
                                     </div>
                                 @endforeach
                             @else
                                 <div class="carousel-item active">
-                                    <img src="{{ url('/') }}/storage/{{ $product->photo }}" alt="{{ $product->name }}" class="d-block w-100" style="height: 600px; object-fit: cover; cursor: pointer;" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="openModal('{{ url('/') }}/storage/{{ $product->photo }}', '0')">
+                                    <img src="{{ $productImageUrl }}" alt="{{ $product->name }}" class="d-block w-100" style="height: 600px; object-fit: cover; cursor: pointer;" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="openModal('{{ $productImageUrl }}', '0')">
                                 </div>
                             @endif
                         </div>
@@ -86,13 +88,14 @@
                                 <div class="carousel-inner" id="modalCarouselInner">
                                     @if($mediafiles->count() > 0)
                                         @foreach($mediafiles as $index => $media)
+                                            @php($mediaImageUrl = uploaded_asset_url($media->file_path))
                                             <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
-                                                <img src="{{ $media->file_path }}" class="d-block w-100" style="height: 500px; object-fit: cover;">
+                                                <img src="{{ $mediaImageUrl }}" class="d-block w-100" style="height: 500px; object-fit: cover;">
                                             </div>
                                         @endforeach
                                     @else
                                         <div class="carousel-item active">
-                                            <img src="{{ url('/') }}/storage/{{ $product->photo }}" class="d-block w-100" style="height: 500px; object-fit: cover;">
+                                            <img src="{{ $productImageUrl }}" class="d-block w-100" style="height: 500px; object-fit: cover;">
                                         </div>
                                     @endif
                                 </div>

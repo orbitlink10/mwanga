@@ -48,7 +48,7 @@
                         </div>
                         <div class="category-hero-image">
                             @if(!empty($category->photo))
-                                <img src="{{ $category->photo }}" alt="{{ $category->name }}">
+                                <img src="{{ uploaded_asset_url($category->photo) }}" alt="{{ $category->name }}">
                             @else
                                 <div class="category-hero-image-fallback">
                                     <i class="fas fa-camera"></i>
@@ -84,8 +84,8 @@
                             <div class="product-img-action-wrap">
                                 <div class="product-img product-img-zoom">
                                     <a href="{{ route('product_details', $ad->slug) }}">
-                                        <img class="default-img" src="{{ url('/') }}/storage/{{ $ad->photo }}" alt="{{ $ad->name }}" loading="lazy">
-                                        <img class="hover-img" src="{{ url('/') }}/storage/{{ $ad->photo }}" alt="{{ $ad->name }}" loading="lazy">
+                                        <img class="default-img" src="{{ uploaded_asset_url($ad->photo) }}" alt="{{ $ad->name }}" loading="lazy">
+                                        <img class="hover-img" src="{{ uploaded_asset_url($ad->photo) }}" alt="{{ $ad->name }}" loading="lazy">
                                     </a>
                                 </div>
                             </div>
@@ -135,4 +135,3 @@
     </section>
 </div>
 @endsection
-

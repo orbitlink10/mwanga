@@ -61,7 +61,7 @@
                             <!-- Media (image / local video / YouTube / Vimeo) -->
                             <div class="col-lg-6 text-center hero-media">
                                 @php
-                                    $src         = $slider->img_url;
+                                    $src         = uploaded_asset_url($slider->img_url);
                                     $isVideoFile = \Illuminate\Support\Str::endsWith($src, ['.mp4', '.webm', '.ogg']);
                                     $isYouTube   = \Illuminate\Support\Str::contains($src, ['youtube.com', 'youtu.be']);
                                     $isVimeo     = \Illuminate\Support\Str::contains($src, 'vimeo.com');
@@ -220,7 +220,7 @@
                     <a href="{{ route('view_product_category', ['slug' => $category->slug]) }}" class="text-decoration-none text-dark d-block h-100">
                         <div class="card category-card border-0 shadow-sm h-100">
                             <div class="card-img-top position-relative overflow-hidden">
-                                <img src="{{ $category->photo }}" loading="lazy"
+                                <img src="{{ uploaded_asset_url($category->photo) }}" loading="lazy"
                                      alt="{{ $category->name }}"
                                      class="img-fluid w-100 h-100 object-fit-cover">
                                 <div class="overlay d-flex align-items-center justify-content-center">
@@ -287,8 +287,8 @@
                                 <div class="product-img-action-wrap">
                                     <div class="product-img product-img-zoom">
                                         <a href="{{ route('product_details', $ad->slug) }}">
-                                            <img class="default-img" src="{{ url('/') }}/storage/{{ $ad->photo }}" alt="{{ $ad->name }}" loading="lazy">
-                                            <img class="hover-img"   src="{{ url('/') }}/storage/{{ $ad->photo }}" alt="{{ $ad->name }}" loading="lazy">
+                                            <img class="default-img" src="{{ uploaded_asset_url($ad->photo) }}" alt="{{ $ad->name }}" loading="lazy">
+                                            <img class="hover-img"   src="{{ uploaded_asset_url($ad->photo) }}" alt="{{ $ad->name }}" loading="lazy">
                                         </a>
                                     </div>
                                 </div>
@@ -461,7 +461,6 @@
   // Removed sticky pass-through: default page scroll behavior restored
 </script>
 @endsection
-
 
 
 

@@ -13,7 +13,7 @@
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="{{ $post->meta_title ?? 'Default Title' }}" />
     <meta property="og:description" content="{{ $post->meta_description ?? 'Default description here.' }}" />
-    <meta property="og:image" content="{{ $post->photo ? asset('storage/' . $post->photo) : asset('default-image.jpg') }}" />
+    <meta property="og:image" content="{{ uploaded_asset_url($post->photo, 'default-image.jpg') }}" />
     <meta property="og:image:width" content="1478" />
     <meta property="og:image:height" content="1108" />
     <meta property="og:url" content="{{ url()->current() }}" />
@@ -25,7 +25,7 @@
     <meta name="twitter:site" content="{{ url('/') }}" />
     <meta name="twitter:title" content="{{ $post->meta_title ?? 'Default Title' }}" />
     <meta name="twitter:description" content="{{ $post->meta_description ?? 'Default description here.' }}" />
-    <meta name="twitter:image" content="{{ $post->photo ? asset('storage/' . $post->photo) : asset('default-image.jpg') }}" />
+    <meta name="twitter:image" content="{{ uploaded_asset_url($post->photo, 'default-image.jpg') }}" />
 @endsection
 
 @section('main')
@@ -83,7 +83,7 @@
             <!-- Header Image -->
             <div class="col-md-6 text-center">
                 <img class="img-fluid rounded shadow-lg"
-                     src="{{ $post->photo ? asset('storage/' . $post->photo) : asset('assets/img/default-placeholder.jpg') }}"
+                     src="{{ uploaded_asset_url($post->photo, 'assets/img/default-placeholder.jpg') }}"
                      alt="{{ $post->title }} image" style="max-width: 90%; border-radius: 20px;">
             </div>
         </div>
@@ -100,8 +100,9 @@
                         <div class="row justify-content-center">
                             @foreach($mediaChunk as $media)
                                 <div class="col-md-3 col-sm-6 mb-4">
-                                    <a href="{{ asset($media->file_path) }}" class="media-card2 position-relative" data-lg-size="1600-1200">
-                                        <img src="{{ asset($media->file_path) }}" alt="Media Image" class="img-fluid rounded shadow-sm" style="object-fit: cover; height: 200px; width: 100%;">
+                                    @php($mediaImageUrl = uploaded_asset_url($media->file_path))
+                                    <a href="{{ $mediaImageUrl }}" class="media-card2 position-relative" data-lg-size="1600-1200">
+                                        <img src="{{ $mediaImageUrl }}" alt="Media Image" class="img-fluid rounded shadow-sm" style="object-fit: cover; height: 200px; width: 100%;">
                                     </a>
                                 </div>
                             @endforeach

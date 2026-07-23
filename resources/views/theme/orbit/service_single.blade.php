@@ -20,7 +20,7 @@
                 <div class="carousel-inner rounded-4 shadow-sm">
                     @foreach($mediaFiles as $index => $image)
                         <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
-                            <img src="{{ $image->file_path }}" class="d-block w-100" alt="Service {{ $service->name }}" style="height: 450px; object-fit: contain;">
+                            <img src="{{ uploaded_asset_url($image->file_path) }}" class="d-block w-100" alt="Service {{ $service->name }}" style="height: 450px; object-fit: contain;">
                         </div>
                     @endforeach
                 </div>

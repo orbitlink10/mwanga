@@ -19,21 +19,18 @@
         $rawLogo = get_option('logo');
         $rawFavicon = get_option('favicon');
         $rawHero = get_option('hero_image');
-        $siteLogo = null;
         $isAbs = function ($value) {
             return \Illuminate\Support\Str::startsWith($value, ['http://', 'https://', '//']);
         };
         if (!empty($rawLogo)) {
-            $siteLogo = $isAbs($rawLogo) ? $rawLogo : url($rawLogo);
+            $siteLogo = uploaded_asset_url($rawLogo);
         } elseif (!empty($rawFavicon)) {
-            $siteLogo = $isAbs($rawFavicon) ? $rawFavicon : url($rawFavicon);
+            $siteLogo = uploaded_asset_url($rawFavicon);
         } else {
             $siteLogo = asset('lucare/assets/imgs/theme/logo.svg');
         }
-        $shareImage = $rawHero ?: $siteLogo;
-        if (!empty($shareImage) && !$isAbs($shareImage)) {
-            $shareImage = url($shareImage);
-        }
+        $faviconUrl = uploaded_asset_url($rawFavicon, 'default-favicon.png');
+        $shareImage = uploaded_asset_url($rawHero ?: $siteLogo);
         $shareHost = parse_url($shareImage, PHP_URL_HOST);
         $siteHost  = parse_url($siteUrl, PHP_URL_HOST);
         if ($shareHost && $siteHost && $shareHost !== $siteHost) {
@@ -115,12 +112,12 @@
     <meta name="twitter:image" content="@yield('twitter_image', $shareImage)" />
 
     <!-- Favicons -->
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ get_option('favicon', asset('default-favicon.png')) }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ get_option('favicon', asset('default-favicon.png')) }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ get_option('favicon', asset('default-favicon.png')) }}">
-    <link rel="shortcut icon" type="image/x-icon" href="{{ get_option('favicon', asset('default-favicon.png')) }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ $faviconUrl }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ $faviconUrl }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ $faviconUrl }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ $faviconUrl }}">
     <link rel="manifest" href="{{ asset('dark/assets/img/favicons/manifest.json') }}">
-    <meta name="msapplication-TileImage" content="{{ get_option('favicon', asset('default-favicon.png')) }}">
+    <meta name="msapplication-TileImage" content="{{ $faviconUrl }}">
 
     <!-- Canonical URL -->
     <link rel="canonical" href="@yield('canonical', url()->current())">
@@ -200,11 +197,7 @@
                 @php
                     $siteName = get_option('site_name', 'Orbitlink Solutions');
                     $rawLogo = get_option('logo');
-                    $logoUrl = null;
-                    if (!empty($rawLogo)) {
-                        $isAbs = \Illuminate\Support\Str::startsWith($rawLogo, ['http://','https://','//']);
-                        $logoUrl = $isAbs ? $rawLogo : url($rawLogo);
-                    }
+                    $logoUrl = uploaded_asset_url($rawLogo);
                 @endphp
                 <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
                     @if($logoUrl)
@@ -289,7 +282,7 @@
                             <a class="category-pill" href="{{ route('view_product_category', ['slug' => $cat->slug]) }}">
                                 <span class="category-pill-icon">
                                     @if(!empty($cat->photo))
-                                        <img src="{{ $cat->photo }}" alt="{{ $cat->name }}" loading="lazy">
+                                        <img src="{{ uploaded_asset_url($cat->photo) }}" alt="{{ $cat->name }}" loading="lazy">
                                     @else
                                         <i class="fas fa-plus"></i>
                                     @endif
@@ -529,4 +522,3 @@
     <main class="main">
         @include('flash_msg')
         <!-- Your main content goes here -->
-

@@ -9,7 +9,7 @@
     if (\Illuminate\Support\Str::startsWith($wa, '0')) { $wa = '254'.\Illuminate\Support\Str::substr($wa, 1); }
     $waMessage = urlencode("Hi, I'd like to book an onsite welding service.");
     $waLink = $wa ? "https://wa.me/{$wa}?text={$waMessage}" : null;
-    $heroImg = get_option('hero_image') ?: get_option('logo');
+    $heroImg = uploaded_asset_url(get_option('hero_image') ?: get_option('logo'));
 @endphp
 
 <!-- Welding Service Hero -->
@@ -112,7 +112,7 @@
       <div id="portfolioTrack" class="d-flex gap-3 flex-nowrap portfolio-scroll px-4">
         @foreach($medias->take(12) as $media)
           <div class="port-item">
-            <img src="{{ $media->file_path }}" alt="Welding work" loading="lazy" decoding="async">
+            <img src="{{ uploaded_asset_url($media->file_path) }}" alt="Welding work" loading="lazy" decoding="async">
           </div>
         @endforeach
       </div>
@@ -141,7 +141,7 @@
                             </div>
                             <div class="col-lg-7 col-md-6">
                                 <div class="single-slider-img single-slider-img-1">
-                                    <img class="animated slider-1-1" src="{{ $slider->img_url }}" alt="{{ $slider->h1_title ?? 'Hero slide' }}" loading="{{ $loop->first ? 'eager' : 'lazy' }}" fetchpriority="{{ $loop->first ? 'high' : 'auto' }}" decoding="async">
+                                    <img class="animated slider-1-1" src="{{ uploaded_asset_url($slider->img_url) }}" alt="{{ $slider->h1_title ?? 'Hero slide' }}" loading="{{ $loop->first ? 'eager' : 'lazy' }}" fetchpriority="{{ $loop->first ? 'high' : 'auto' }}" decoding="async">
                                 </div>
                             </div>
                         </div>
@@ -172,7 +172,7 @@
                     <a href="{{ route('view_product_category', ['slug' => $category->slug]) }}" class="cat-item text-decoration-none text-dark">
                         <div class="cat-card border-0 shadow-sm">
                             <div class="cat-thumb">
-                                <img src="{{ $category->photo }}" alt="{{ $category->name }}" loading="lazy" decoding="async">
+                                <img src="{{ uploaded_asset_url($category->photo) }}" alt="{{ $category->name }}" loading="lazy" decoding="async">
                                 <div class="cat-overlay"><span>{{ $category->name }}</span></div>
                             </div>
                             <div class="cat-title text-center">{{ $category->name }}</div>
@@ -219,8 +219,8 @@
                             <div class="product-img-action-wrap">
                                 <div class="product-img product-img-zoom">
                                     <a href="{{ route('product_details', $ad->slug) }}">
-                                        <img class="default-img" src="{{ url('/') }}/storage/{{ $ad->photo }}" alt="{{ $ad->name }}" loading="lazy" decoding="async">
-                                        <img class="hover-img" src="{{ url('/') }}/storage/{{ $ad->photo }}" alt="{{ $ad->name }}" loading="lazy" decoding="async">
+                                        <img class="default-img" src="{{ uploaded_asset_url($ad->photo) }}" alt="{{ $ad->name }}" loading="lazy" decoding="async">
+                                        <img class="hover-img" src="{{ uploaded_asset_url($ad->photo) }}" alt="{{ $ad->name }}" loading="lazy" decoding="async">
                                     </a>
                                 </div>
                             </div>

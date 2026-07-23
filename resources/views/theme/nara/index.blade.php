@@ -22,7 +22,7 @@
                             </div>
                             <div class="col-lg-7 col-md-6">
                                 <div class="single-slider-img single-slider-img-1">
-                                    <img class="animated slider-1-1" src="{{ $slider->img_url }}" alt="">
+                                    <img class="animated slider-1-1" src="{{ uploaded_asset_url($slider->img_url) }}" alt="">
                                 </div>
                             </div>
                         </div>
@@ -82,8 +82,8 @@
                             <div class="product-img-action-wrap">
                                 <div class="product-img product-img-zoom">
                                     <a href="{{ route('product_details', $ad->slug) }}">
-                                        <img class="default-img" src="{{ url('/') }}/storage/{{ $ad->photo }}" alt="">
-                                        <img class="hover-img" src="{{ url('/') }}/storage/{{ $ad->photo }}" alt="">
+                                        <img class="default-img" src="{{ uploaded_asset_url($ad->photo) }}" alt="">
+                                        <img class="hover-img" src="{{ uploaded_asset_url($ad->photo) }}" alt="">
                                     </a>
                                 </div>
                             </div>

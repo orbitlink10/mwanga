@@ -7,7 +7,7 @@
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="{{ $post->meta_title }}" />
     <meta property="og:description" content="{{ $post->meta_description }}" />
-    <meta property="og:image" content="{{ $post->photo ? url('/') . '/storage/' . $post->photo : asset('default-image.jpg') }}" />
+    <meta property="og:image" content="{{ uploaded_asset_url($post->photo, 'default-image.jpg') }}" />
     <meta property="og:image:width" content="1478" />
     <meta property="og:image:height" content="1108" />
     <meta property="og:url" content="{{ url()->current() }}" />
@@ -21,7 +21,7 @@
     <meta name="twitter:site" content="{{ url('/') }}" />
     <meta name="twitter:title" content="{{ $post->meta_title }}" />
     <meta name="twitter:description" content="{{ $post->meta_description }}" />
-    <meta name="twitter:image" content="{{ $post->photo ? url('/') . '/storage/' . $post->photo : asset('default-image.jpg') }}" />
+    <meta name="twitter:image" content="{{ uploaded_asset_url($post->photo, 'default-image.jpg') }}" />
     @php
         $siteName = get_option('site_name', 'Orbitlink Solutions');
         $rawLogo = get_option('logo');
@@ -30,7 +30,7 @@
             $isAbs = \Illuminate\Support\Str::startsWith($rawLogo, ['http://', 'https://', '//']);
             $siteLogo = $isAbs ? $rawLogo : url($rawLogo);
         }
-        $postImage = $post->photo ? url('/') . '/storage/' . $post->photo : null;
+        $postImage = $post->photo ? uploaded_asset_url($post->photo) : null;
         $articleSchema = [
             '@context' => 'https://schema.org',
             '@type' => 'BlogPosting',
@@ -98,12 +98,12 @@
                 @if($post->photo)
 
                 <img class="img-fluid rounded shadow-lg"
-                     src="{{ url('/') }}/storage/{{ $post->photo }}"
+                     src="{{ uploaded_asset_url($post->photo) }}"
                      alt="{{ $post->title }} image" style="max-width: 90%; border-radius: 20px;">
                      @else
 
                      <img class="img-fluid rounded shadow-lg"
-                     src="{{ get_option('hero_image', 'assets/img/default-placeholder.jpg') }}"
+                     src="{{ uploaded_asset_url(get_option('hero_image'), 'assets/img/default-placeholder.jpg') }}"
                      alt="{{ $post->title }} image" style="max-width: 90%; border-radius: 20px;">
  
                      @endif
@@ -132,8 +132,8 @@ $products = \App\Models\Product::limit(4)->get();
                             <div class="product-img-action-wrap">
                                 <div class="product-img product-img-zoom">
                                     <a href="{{ route('product_details', $ad->slug) }}">
-                                        <img class="default-img" src="{{ url('/') }}/storage/{{ $ad->photo }}" alt="">
-                                        <img class="hover-img" src="{{ url('/') }}/storage/{{ $ad->photo }}" alt="">
+                                        <img class="default-img" src="{{ uploaded_asset_url($ad->photo) }}" alt="">
+                                        <img class="hover-img" src="{{ uploaded_asset_url($ad->photo) }}" alt="">
                                     </a>
                                 </div>
                             </div>

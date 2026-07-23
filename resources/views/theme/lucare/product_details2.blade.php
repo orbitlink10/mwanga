@@ -30,19 +30,19 @@
             @if($mediafiles->count() > 0)
                 @foreach($mediafiles as $media)
                     <figure class="border-radius-10">
-                        <img src="{{ $media->file_path }}" alt="{{ $product->name }}">
+                        <img src="{{ uploaded_asset_url($media->file_path) }}" alt="{{ $product->name }}">
                     </figure>
                 @endforeach
             @else
                 <figure class="border-radius-10">
-                    <img src="{{ url('/') }}/storage/{{ $product->photo }}" alt="{{ $product->name }}">
+                    <img src="{{ uploaded_asset_url($product->photo) }}" alt="{{ $product->name }}">
                 </figure>
             @endif
         </div>
         <!-- THUMBNAILS -->
         <div class="slider-nav-thumbnails pl-15 pr-15">
             @foreach($mediafiles as $media)
-                <div><img src="{{ $media->file_path }}" alt="{{ $product->name }}"></div>
+                <div><img src="{{ uploaded_asset_url($media->file_path) }}" alt="{{ $product->name }}"></div>
             @endforeach
         </div>
     </div>

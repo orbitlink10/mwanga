@@ -59,7 +59,15 @@ Route::get('/storage/{path}', function (string $path) {
         abort(404);
     }
 
-    foreach ([storage_path('app/public'), storage_path()] as $storageRoot) {
+    $storageRoots = [
+        storage_path('app/public'),
+        storage_path(),
+        storage_path('public'),
+        public_path('storage'),
+        public_path(),
+    ];
+
+    foreach ($storageRoots as $storageRoot) {
         $root = realpath($storageRoot);
         $file = realpath($storageRoot.DIRECTORY_SEPARATOR.str_replace('/', DIRECTORY_SEPARATOR, $path));
 

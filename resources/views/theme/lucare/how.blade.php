@@ -22,8 +22,9 @@ $medias = \App\Models\Media::all();
                         <div class="row">
                             @foreach($mediaChunk as $media)
                                 <div class="col-md-3">
-                                    <div class="media-card" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="showImage('{{ $media->file_path }}')">
-                                        <img class="d-block w-100" src="{{ $media->file_path }}" alt="Installation">
+                                    @php($mediaImageUrl = uploaded_asset_url($media->file_path))
+                                    <div class="media-card" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="showImage('{{ $mediaImageUrl }}')">
+                                        <img class="d-block w-100" src="{{ $mediaImageUrl }}" alt="Installation">
                                     </div>
                                 </div>
                             @endforeach

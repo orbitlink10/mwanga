@@ -12,7 +12,7 @@
                 <div class="carousel-inner">
                     @foreach($mediaFiles as $index => $image)
                         <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
-                            <img src="{{ $image->file_path }}" class="d-block w-100 rounded-3" alt="Service {{ $service->name }}" height="401">
+                            <img src="{{ uploaded_asset_url($image->file_path) }}" class="d-block w-100 rounded-3" alt="Service {{ $service->name }}" height="401">
                         </div>
                     @endforeach
                 </div>
