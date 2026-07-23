@@ -2,7 +2,15 @@
 /node_modules
 /public/build
 /public/hot
-/public/storage
+/public/storage/*
+!/public/storage/products/
+!/public/storage/products/**
+!/public/storage/uploads/
+!/public/storage/uploads/images/
+!/public/storage/uploads/images/**
+!/public/storage/uploads/medias/
+!/public/storage/uploads/medias/**
+/public/storage/uploads/images/*.exe
 /storage/*.key
 /vendor
 /vendor.zip
